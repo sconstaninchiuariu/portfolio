@@ -247,7 +247,7 @@ function initMolten(canvas, cfg) {
     const target = [0.5, 0.5];
 
     function resize() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         const w = Math.max(1, canvas.clientWidth);
         const h = Math.max(1, canvas.clientHeight);
         canvas.width = Math.floor(w * dpr);
@@ -363,7 +363,41 @@ function onScroll() {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' }));
+function smoothScrollTo(targetY, duration) {
+    const startY = window.scrollY;
+    const diff = targetY - startY;
+    const start = performance.now();
+    (function step(now) {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        window.scrollTo(0, startY + diff * eased);
+        if (t < 1) requestAnimationFrame(step);
+    })(start);
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (id.length < 2) return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - header.offsetHeight;
+        if (reducedMotion) {
+            window.scrollTo(0, top);
+        } else {
+            smoothScrollTo(top, 900);
+        }
+    });
+});
+
+backTop.addEventListener('click', () => {
+    if (reducedMotion) {
+        window.scrollTo(0, 0);
+    } else {
+        smoothScrollTo(0, 900);
+    }
+});
 
 const sections = document.querySelectorAll('.section');
 const navLinks = document.querySelectorAll('nav a');
