@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sebastian Constantin Chiuariu — IT Support, Infrastructure Engineering & Web Development. Based in Spain, open to relocation worldwide.">
+    <title>Sebastian Constantin Chiuariu — IT & Web Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="loader" aria-hidden="true">
+        <span class="loader-mark">S C</span>
+        <div class="loader-bar"></div>
+    </div>
+
+    <div id="scrollProgress" aria-hidden="true"></div>
+
+    <div class="topo" aria-hidden="true"><canvas id="topoCanvas"></canvas></div>
+
+    <header id="header">
+        <a class="logo" href="#home">
+            <img src="images/LogoType PNG.png" alt="Logo">
+            <span>Sebastian Constantin</span>
+        </a>
+        <nav id="nav">
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <button id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <main>
+
+        <section id="home" class="hero">
+            <p class="eyebrow">&lt;IT Support &amp; Web Development&gt;</p>
+            <h1>Sebastian Constantin<br><span class="typed" id="typed"></span><span class="cursor">|</span></h1>
+            <p class="subtitle">Detail-oriented <span class="hl">IT Specialist</span> with hands-on experience in <span class="hl">desktop support</span>, <span class="hl">system administration</span>, <span class="hl">network infrastructure</span> and <span class="hl">web maintenance</span>.</p>
+            <ul class="meta">
+                <li>Based in Spain — open to relocation worldwide</li>
+                <li>EU Citizen — Full working rights</li>
+                <li>Available immediately</li>
+            </ul>
+            <div class="actions">
+                <a class="btn primary" href="#contact">Contact Me</a>
+                <a class="btn ghost" href="#projects">View Projects</a>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <h2><span class="num">01</span> / Experience</h2>
+            <div class="card timeline">
+                <div class="timeline-head">
+                    <div>
+                        <h3>IT Support &amp; Infrastructure Intern</h3>
+                        <p class="company"><a class="ext-link" href="https://automate.ie/" target="_blank" rel="noopener">Automate Technology ↗</a> — Dublin, Ireland</p>
+                    </div>
+                    <p class="date">Mar 2024 – Jun 2024</p>
+                </div>
+                <ul>
+                    <li>Diagnosed and repaired <span class="hl">IT hardware</span>, peripherals and client <span class="hl">operating systems</span> (Windows / macOS).</li>
+                    <li>Provided remote technical support and virtual assistance for <span class="hl">B2B clients</span>, meeting <span class="hl">resolution SLAs</span>.</li>
+                    <li>Managed <span class="hl">server maintenance</span>, data operations, <span class="hl">network connectivity</span> and overall <span class="hl">system stability</span>.</li>
+                    <li>Handled web support, site maintenance and updates within <span class="hl">WordPress environments</span>.</li>
+                    <li>Documented diagnostic steps and created internal <span class="hl">knowledge base articles</span> to streamline ticketing workflows.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <h2><span class="num">02</span> / Skills</h2>
+            <div class="grid">
+                <div class="card skill">
+                    <p class="label">Operating Systems</p>
+                    <p>Windows, Windows Server, macOS, Linux</p>
+                </div>
+                <div class="card skill">
+                    <p class="label">Networking &amp; Infrastructure</p>
+                    <p>LAN, Network Protocols, Active Directory, DNS/DHCP, VPN, Firewall Configuration</p>
+                </div>
+                <div class="card skill">
+                    <p class="label">Hardware &amp; Diagnostics</p>
+                    <p>System Assembly, PC Maintenance, Hardware Diagnostics, Peripheral Setup</p>
+                </div>
+                <div class="card skill">
+                    <p class="label">Web &amp; Software</p>
+                    <p>React, WordPress, HTML/CSS, Office 365, Ticketing Systems, Remote Desktop Tools</p>
+                </div>
+                <div class="card skill">
+                    <p class="label">Support Capabilities</p>
+                    <p>L1 &amp; L2 Support, Remote Assistance, Incident Classification, User Account Management</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <h2><span class="num">03</span> / Projects</h2>
+            <div class="grid" id="projectsGrid">
+                <!-- Duplicate this card to add a new project.
+                     <div class="card project">
+                         <h3>Project Title</h3>
+                         <p class="desc">Short description of the project.</p>
+                         <p class="tech">React · Node.js · PostgreSQL</p>
+                         <a href="#" target="_blank">Live Demo →</a>
+                     </div>
+                -->
+                <div class="card project">
+                    <h3>IT &amp; Web Portfolio</h3>
+                    <p class="desc">This site. A lightweight, dark, minimalist single-page portfolio built from scratch with vanilla HTML, CSS and JavaScript.</p>
+                    <p class="tech">HTML · CSS · JavaScript</p>
+                    <a href="#home">This Project</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="section">
+            <h2><span class="num">04</span> / Education</h2>
+            <div class="card timeline">
+                <div class="timeline-head">
+                    <div>
+                        <h3>Intermediate VET Diploma — Microcomputer Systems &amp; Networks (SMR)</h3>
+                        <p class="company"><a class="ext-link" href="https://redols.caib.es/c07001964/" target="_blank" rel="noopener">IES Joan Ramis i Ramis ↗</a> — Final Grade: 8.00 / 10.00</p>
+                    </div>
+                    <p class="date">2022 – 2024</p>
+                </div>
+                <p class="label">Key Modules</p>
+                <ul>
+                    <li>Web Applications, Network Services, Network Operating Systems</li>
+                    <li>Computer Assembly &amp; Maintenance, Local Networks, IT Security</li>
+                    <li><span class="hl">400 hours of practical workplace training (FCT) completed in Dublin, Ireland</span></li>
+                </ul>
+            </div>
+            <div class="card timeline languages">
+                <h3>Languages</h3>
+                <ul>
+                    <li>Spanish — Native / Bilingual</li>
+                    <li>Romanian — Native / Bilingual</li>
+                    <li><span class="hl">English — Professional Working Proficiency (B2/C1)</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2><span class="num">05</span> / Contact</h2>
+            <p class="contact-note">Open to IT Support, Infrastructure and Web Development roles worldwide — currently targeting Dublin. Hybrid or remote.</p>
+            <div class="grid contact-grid">
+                <a class="card contact" href="mailto:schiuariu05@gmail.com?subject=Hello%20Sebastian">
+                    <p class="label">Email</p>
+                    <p>schiuariu05@gmail.com</p>
+                </a>
+                <a class="card contact" href="https://github.com/sconstaninchiuariu" target="_blank" rel="noopener">
+                    <p class="label">GitHub</p>
+                    <p>github.com/sconstaninchiuariu</p>
+                </a>
+                <a class="card contact" href="https://www.linkedin.com/in/sebastian-constantin-chiuariu0" target="_blank" rel="noopener">
+                    <p class="label">LinkedIn</p>
+                    <p>in/sebastian-constantin-chiuariu0</p>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© <span id="year"></span> Sebastian Constantin Chiuariu — IT Support &amp; Web Developer</p>
+        <p class="credit">Designed &amp; built from scratch with vanilla HTML, CSS &amp; JavaScript</p>
+    </footer>
+
+    <button id="backTop" aria-label="Back to top">↑</button>
+
+    <script src="app.js"></script>
+</body>
+</html>
