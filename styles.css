@@ -683,6 +683,11 @@ nav a.active::after {
         animation: none;
     }
 
+    .cursor {
+        animation: none;
+        opacity: 0.6;
+    }
+
     #scrollProgress {
         display: none;
     }

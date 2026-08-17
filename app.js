@@ -1,3 +1,6 @@
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = window.matchMedia('(pointer: fine)').matches;
+
 const roles = [
     'IT Support Specialist',
     'Web Developer',
@@ -39,11 +42,11 @@ function typeLoop() {
     }
 }
 
-typeLoop();
-
-window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 10);
-});
+if (reducedMotion) {
+    typedEl.textContent = roles[0];
+} else {
+    typeLoop();
+}
 
 menuToggle.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
@@ -245,6 +248,15 @@ function initMolten(canvas, cfg) {
 
     const mouse = new Float32Array([0.5, 0.5]);
     const target = [0.5, 0.5];
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function render(t) {
+        gl.uniform1f(u.iTime, t);
+        mouse[0] += 0.05 * (target[0] - mouse[0]);
+        mouse[1] += 0.05 * (target[1] - mouse[1]);
+        gl.uniform2f(u.uMouse, mouse[0], mouse[1]);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
 
     function resize() {
         const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -254,6 +266,7 @@ function initMolten(canvas, cfg) {
         canvas.height = Math.floor(h * dpr);
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.uniform2f(u.iResolution, canvas.width, canvas.height);
+        if (reduced) render(0);
     }
 
     gl.uniform1f(u.iTime, 0);
@@ -280,21 +293,11 @@ function initMolten(canvas, cfg) {
     resize();
     window.addEventListener('resize', resize);
 
-    if (cfg.mouseInteraction) {
+    if (cfg.mouseInteraction && finePointer) {
         window.addEventListener('pointermove', e => {
             target[0] = e.clientX / window.innerWidth;
             target[1] = 1 - e.clientY / window.innerHeight;
-        });
-    }
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function render(t) {
-        gl.uniform1f(u.iTime, t);
-        mouse[0] += 0.05 * (target[0] - mouse[0]);
-        mouse[1] += 0.05 * (target[1] - mouse[1]);
-        gl.uniform2f(u.uMouse, mouse[0], mouse[1]);
-        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        }, { passive: true });
     }
 
     if (reduced) {
@@ -323,6 +326,15 @@ function initMolten(canvas, cfg) {
         }
     };
 
+    canvas.addEventListener('webglcontextlost', e => {
+        e.preventDefault();
+        tryStop();
+    });
+    canvas.addEventListener('webglcontextrestored', () => {
+        resize();
+        tryStart();
+    });
+
     const io = new IntersectionObserver(
         ([entry]) => {
             isVisible = entry.isIntersecting;
@@ -348,12 +360,11 @@ if (moltenCanvas) initMolten(moltenCanvas, moltenCfg);
 
 /* ---------- Premium interactions ---------- */
 
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 const progressBar = document.getElementById('scrollProgress');
 const backTop = document.getElementById('backTop');
 
 function onScroll() {
+    header.classList.toggle('scrolled', window.scrollY > 10);
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const p = max > 0 ? window.scrollY / max : 0;
     progressBar.style.width = (p * 100) + '%';
@@ -416,21 +427,21 @@ document.querySelectorAll('.card').forEach(card => {
         const r = card.getBoundingClientRect();
         card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
         card.style.setProperty('--my', (e.clientY - r.top) + 'px');
-    });
+    }, { passive: true });
     card.addEventListener('pointerleave', () => {
         card.style.setProperty('--mx', '50%');
         card.style.setProperty('--my', '50%');
     });
 });
 
-if (window.matchMedia('(pointer: fine)').matches && !reducedMotion) {
+if (finePointer && !reducedMotion) {
     document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('pointermove', e => {
             const r = btn.getBoundingClientRect();
             const dx = e.clientX - (r.left + r.width / 2);
             const dy = e.clientY - (r.top + r.height / 2);
             btn.style.transform = 'translate(' + dx * 0.22 + 'px, ' + dy * 0.22 + 'px)';
-        });
+        }, { passive: true });
         btn.addEventListener('pointerleave', () => {
             btn.style.transform = '';
         });
