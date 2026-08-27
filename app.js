@@ -1,5 +1,7 @@
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(pointer: fine)').matches;
+const isMobile = window.matchMedia('(max-width: 720px)').matches;
+const isLowEnd = navigator.hardwareConcurrency <= 4 || navigator.deviceMemory <= 4;
 
 const roles = [
     'IT Support Specialist',
@@ -356,7 +358,7 @@ function initMolten(canvas, cfg) {
 }
 
 const moltenCanvas = document.getElementById('topoCanvas');
-if (moltenCanvas) initMolten(moltenCanvas, moltenCfg);
+if (moltenCanvas && !isMobile && !isLowEnd && !reducedMotion) initMolten(moltenCanvas, moltenCfg);
 
 /* ---------- Premium interactions ---------- */
 
