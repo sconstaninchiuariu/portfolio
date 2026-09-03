@@ -1,4 +1,3 @@
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(pointer: fine)').matches;
 const isMobile = window.matchMedia('(max-width: 720px)').matches;
 const isLowEnd = navigator.hardwareConcurrency <= 4 || navigator.deviceMemory <= 4;
@@ -44,11 +43,7 @@ function typeLoop() {
     }
 }
 
-if (reducedMotion) {
-    typedEl.textContent = roles[0];
-} else {
-    typeLoop();
-}
+typeLoop();
 
 menuToggle.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
@@ -250,7 +245,6 @@ function initMolten(canvas, cfg) {
 
     const mouse = new Float32Array([0.5, 0.5]);
     const target = [0.5, 0.5];
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function render(t) {
         gl.uniform1f(u.iTime, t);
@@ -268,7 +262,6 @@ function initMolten(canvas, cfg) {
         canvas.height = Math.floor(h * dpr);
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.uniform2f(u.iResolution, canvas.width, canvas.height);
-        if (reduced) render(0);
     }
 
     gl.uniform1f(u.iTime, 0);
@@ -300,11 +293,6 @@ function initMolten(canvas, cfg) {
             target[0] = e.clientX / window.innerWidth;
             target[1] = 1 - e.clientY / window.innerHeight;
         }, { passive: true });
-    }
-
-    if (reduced) {
-        render(0);
-        return;
     }
 
     let raf = 0;
@@ -358,7 +346,7 @@ function initMolten(canvas, cfg) {
 }
 
 const moltenCanvas = document.getElementById('topoCanvas');
-if (moltenCanvas && !isMobile && !isLowEnd && !reducedMotion) initMolten(moltenCanvas, moltenCfg);
+if (moltenCanvas && !isMobile && !isLowEnd) initMolten(moltenCanvas, moltenCfg);
 
 /* ---------- Premium interactions ---------- */
 
@@ -396,20 +384,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         if (!target) return;
         e.preventDefault();
         const top = target.getBoundingClientRect().top + window.scrollY - header.offsetHeight;
-        if (reducedMotion) {
-            window.scrollTo(0, top);
-        } else {
-            smoothScrollTo(top, 900);
-        }
+        smoothScrollTo(top, 900);
     });
 });
 
 backTop.addEventListener('click', () => {
-    if (reducedMotion) {
-        window.scrollTo(0, 0);
-    } else {
-        smoothScrollTo(0, 900);
-    }
+    smoothScrollTo(0, 900);
 });
 
 const sections = document.querySelectorAll('.section');
@@ -436,7 +416,7 @@ document.querySelectorAll('.card').forEach(card => {
     });
 });
 
-if (finePointer && !reducedMotion) {
+if (finePointer) {
     document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('pointermove', e => {
             const r = btn.getBoundingClientRect();
